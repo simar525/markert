@@ -1,18 +1,19 @@
 #!/bin/bash
 
-# Install Composer if it's not available
-if [ ! -f composer.phar ]; then
-  echo "Downloading Composer..."
-  curl -sS https://getcomposer.org/installer | php
+# Ensure composer is installed
+if ! [ -x "$(command -v composer)" ]; then
+  echo 'Error: composer is not installed.' >&2
+  exit 1
 fi
 
+# Copy .env.example to .env
+cp .env.example .env
+
 # Install PHP dependencies
-php composer.phar install --prefer-dist --no-ansi --no-interaction --no-scripts --no-progress
+composer install --prefer-dist --no-ansi --no-interaction --no-scripts --no-progress
 
-# Add any additional build steps if necessary
-# For example:
-# npm install
-# npm run production
+# Generate application key
+php artisan key:generate
 
-# Run Laravel optimization commands if needed
+# Optimize application
 php artisan optimize
