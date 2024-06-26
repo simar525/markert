@@ -1,17 +1,15 @@
 {
   "version": 2,
-  "framework": null,
   "builds": [
-    {
-      "src": "build.sh",
-      "use": "@vercel/static-build"
-    },
-    {
-      "src": "api/index.php",
-      "use": "@vercel/php"
-    }
+      {
+          "src": "Dockerfile",
+          "use": "@vercel/docker"
+      }
   ],
   "routes": [
-    { "src": "/(.*)", "dest": "/api/index.php" }
+      {
+          "src": "/(.*)",
+          "dest": "/var/www/public/index.php"
+      }
   ]
 }
